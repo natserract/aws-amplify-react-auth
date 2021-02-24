@@ -1,0 +1,34 @@
+{
+  "env": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-reactamplifyshop-env-132246-authRole",
+      "UnauthRoleArn": "arn:aws:iam::169737684162:role/amplify-reactamplifyshop-env-132246-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::169737684162:role/amplify-reactamplifyshop-env-132246-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-reactamplifyshop-env-132246-deployment",
+      "UnauthRoleName": "amplify-reactamplifyshop-env-132246-unauthRole",
+      "StackName": "amplify-reactamplifyshop-env-132246",
+      "StackId": "arn:aws:cloudformation:us-east-1:169737684162:stack/amplify-reactamplifyshop-env-132246/2edd7930-7597-11eb-9142-0e0e50fbc697",
+      "AmplifyAppId": "d2q79subjz7rfc"
+    },
+    "categories": {
+      "auth": {
+        "reactamplifyshop6129d8be": {}
+      },
+      "function": {
+        "createOrder": {
+          "deploymentBucketName": "amplify-reactamplifyshop-env-132246-deployment",
+          "s3Key": "amplify-builds/createOrder-694b726271706c6a637a-build.zip"
+        },
+        "products": {
+          "deploymentBucketName": "amplify-reactamplifyshop-env-132246-deployment",
+          "s3Key": "amplify-builds/products-575465766a543147666f-build.zip"
+        },
+        "S3Triggerfc9818ed": {
+          "deploymentBucketName": "amplify-reactamplifyshop-env-132246-deployment",
+          "s3Key": "amplify-builds/S3Triggerfc9818ed-49747153466842504642-build.zip"
+        }
+      }
+    }
+  }
+}

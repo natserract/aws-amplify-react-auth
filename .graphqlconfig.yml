@@ -1,0 +1,12 @@
+projects:
+  reactamplifyshop:
+    schemaPath: graphql/schema.json
+    includes:
+      - graphql/**/*.ts
+    excludes:
+      - ./amplify/**
+    extensions:
+      amplify:
+        codeGenTarget: typescript
+        generatedFileName: ''
+        docsFilePath: graphql
