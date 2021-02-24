@@ -58,6 +58,7 @@ const SignIn = () => {
             name="email"
             size="small"
             variant="outlined"
+            placeholder="Used this: amplify@mailinator.com"
         />
     )
 
@@ -70,6 +71,7 @@ const SignIn = () => {
             size="small"
             type="password"
             variant="outlined"
+            placeholder="Used this: Indonesia"
         />
     )
 

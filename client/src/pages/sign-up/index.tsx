@@ -30,8 +30,10 @@ interface IFormFiels {
 const SignUpConfirmDialog = ({ open, setOpen }: any) => {
     const history = createBrowserHistory()
     const { handleSubmit, register } = useForm<{ code: string }>();
+    const [loading, setLoading] = useState(false)
 
     const onSubmit = handleSubmit(async (result) => {
+        setLoading(true)
         const email = localStorage.getItem('email')
         const { code } = result
         console.log('result confirm', result)
@@ -47,11 +49,12 @@ const SignUpConfirmDialog = ({ open, setOpen }: any) => {
             redirectTo('/sign-up')
         }
 
+        setLoading(false)
         setOpen(false)
         clearStorage()
     })
 
-    const redirectTo = (path: string) => history.push(path)
+    const redirectTo = (path: string) => window.location.href = path
     const clearStorage = () => localStorage.removeItem('email')
 
     const handleClose = () => {
@@ -77,7 +80,7 @@ const SignUpConfirmDialog = ({ open, setOpen }: any) => {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose} color="primary">Cancel</Button>
-                    <Button type="submit" color="primary">Confirm</Button>
+                    <Button type="submit" color="primary">{loading ? 'Please wait' : 'Confirm'}</Button>
                 </DialogActions>
             </form>
         </Dialog>

@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react'
-import { Route, Switch, Router, Redirect, RouteProps } from 'react-router-dom'
+import { Route, Switch, Redirect, BrowserRouter } from 'react-router-dom'
 import { createBrowserHistory } from "history";
 import useAuthStatus from './hooks/useAuthStatus'
 import { Auth } from 'aws-amplify'
 import { Hub } from '@aws-amplify/core';
-import { AmplifySignOut } from '@aws-amplify/ui-react'
 
 // Components
 import Home from './pages/home'
@@ -17,18 +16,14 @@ const AuthenticatedRoute: React.FC<{
     path: string;
 }> = (props) => {
     const { isAuthenticated, component, path } = props
-    const history = createBrowserHistory()
 
-    // useEffect(() => {
-    //     if (!isAuthenticated) {
-    //         history.push('/sign-in')
-    //     }
-    // }, [history, isAuthenticated])
+    if (isAuthenticated) return (
+        <Route path={path} component={component} />
+    )
 
-    if (isAuthenticated) return <Route  path={path} component={component} />
     return (
         <>
-            { !isAuthenticated && <Route path="/sign-in" component={SignIn} />}
+            { !isAuthenticated && <Route path="/sign-in" exact component={SignIn} />}
             { !isAuthenticated && <Redirect to="/sign-in" />}
         </>
     )
@@ -43,8 +38,12 @@ const AppRouter = () => {
     const authStatus = useAuthStatus()
 
     const [state, setState] = useState(false)
+    const [loggedIn, setLoggedIn] = useState<any>()
 
     useEffect(() => {
+        const getLocalStorage = localStorage.getItem('amplify-signin-with-hostedUI')
+        setLoggedIn(Boolean(getLocalStorage))
+
         let updateUser = async () => {
             try {
                 await Auth.currentAuthenticatedUser()
@@ -55,12 +54,14 @@ const AppRouter = () => {
         }
         Hub.listen('auth', updateUser)
         updateUser()
+
+        if (state) history.push('/')
         return () => Hub.remove('auth', updateUser)
 
-    }, [history, authStatus])
+    }, [history, authStatus, state, loggedIn])
 
     return (
-        <Router history={history}>
+        <BrowserRouter>
             <Switch>
                 <Route path="/sign-up" component={SignUp} />
                 <AuthenticatedRoute
@@ -69,7 +70,7 @@ const AppRouter = () => {
                     isAuthenticated={state}
                 />
             </Switch>
-        </Router>
+        </BrowserRouter>
     )
 }
 
