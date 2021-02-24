@@ -10,6 +10,7 @@ import useAuthStatus from '../../hooks/useAuthStatus'
 import { createBrowserHistory } from 'history'
 import styles from './styles'
 import { SignInReducer, initialState } from './reducer'
+import { Link } from 'react-router-dom'
 
 interface IFormFiels {
     email: string;
@@ -19,6 +20,7 @@ interface IFormFiels {
 const useStyles = makeStyles(styles)
 
 const SignIn = () => {
+    const classes = useStyles()
     const history = createBrowserHistory()
 
     const { handleSubmit, register } = useForm<IFormFiels>();
@@ -42,7 +44,7 @@ const SignIn = () => {
 
     const RenderBoundaries = () => {
         const { loading, errors } = state
-        if (loading) return <CircularProgress />
+        if (loading) return <CircularProgress className={classes.progress} />
         if (errors) return <>Error</>
 
         return null
@@ -76,7 +78,7 @@ const SignIn = () => {
     }, [authState, history])
 
     return (
-        <form onSubmit={onSubmit}>
+        <form onSubmit={onSubmit} className={classes.form}>
             <Grid container spacing={3}>
                 <Grid item xs={12}>
                     <Grid container spacing={2}>
@@ -87,12 +89,13 @@ const SignIn = () => {
                             <RenderPassField />
                         </Grid>
                     </Grid>
-                </Grid>
-                <Grid item xs={12}>
-                    <Button color="primary" fullWidth type="submit" variant="contained">
+                    <Button className={classes.btnLogin} color="primary" fullWidth type="submit" variant="contained">
                         {state.loading ? 'Please wait...' : 'Log in'}
                     </Button>
+                </Grid>
+                <Grid item xs={12} className={classes.gridBottom}>
                     <RenderBoundaries />
+                    <span style={{ marginLeft: '20px' }}>Belum punya akun? <Link to="/sign-up"> Sign Up</Link></span>
                 </Grid>
             </Grid>
         </form>

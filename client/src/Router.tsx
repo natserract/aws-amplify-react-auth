@@ -1,25 +1,38 @@
 import { useEffect, useState } from 'react'
-import { Route, Switch, Router, Redirect } from 'react-router-dom'
+import { Route, Switch, Router, Redirect, RouteProps } from 'react-router-dom'
 import { createBrowserHistory } from "history";
 import useAuthStatus from './hooks/useAuthStatus'
 import { Auth } from 'aws-amplify'
 import { Hub } from '@aws-amplify/core';
+import { AmplifySignOut } from '@aws-amplify/ui-react'
 
 // Components
 import Home from './pages/home'
 import SignIn from './pages/sign-in'
+import SignUp from './pages/sign-up'
 
-const AuthenticatedRoute = ({ private: ComponentPrivate, public: ComponentPublic, isLoggedIn, ...props }) => {
-    if (isLoggedIn) {
-        return <ComponentPrivate {...props} />
-    }
+const AuthenticatedRoute: React.FC<{
+    component: React.FC;
+    isAuthenticated: boolean;
+    path: string;
+}> = (props) => {
+    const { isAuthenticated, component, path } = props
+    const history = createBrowserHistory()
 
+    // useEffect(() => {
+    //     if (!isAuthenticated) {
+    //         history.push('/sign-in')
+    //     }
+    // }, [history, isAuthenticated])
+
+    if (isAuthenticated) return <Route  path={path} component={component} />
     return (
         <>
-            <Route exact path="/login" component={ComponentPublic} />
-            <Redirect from="*" to="/login" />
+            { !isAuthenticated && <Route path="/sign-in" component={SignIn} />}
+            { !isAuthenticated && <Redirect to="/sign-in" />}
         </>
     )
+
 }
 
 const AppRouter = () => {
@@ -49,10 +62,11 @@ const AppRouter = () => {
     return (
         <Router history={history}>
             <Switch>
-                <AuthenticatedRoute 
-                    private={Home} 
-                    isLoggedIn={state}
-                    public={SignIn}
+                <Route path="/sign-up" component={SignUp} />
+                <AuthenticatedRoute
+                    path="/"
+                    component={Home}
+                    isAuthenticated={state}
                 />
             </Switch>
         </Router>
