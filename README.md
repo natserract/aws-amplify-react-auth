@@ -3,7 +3,7 @@
 This sample application implements custom Authenticator to provide a basic authentication flow for signing up signing in users as well as protected client side routing using AWS Amplify. The sample is written in React and uses AWS AppSync, Amazon Cognito, Amazon DynamoDB and Amazon S3 as well as the Amplify CLI.
 
 ### Demo
-<img src="https://i.ibb.co/sW6gKwY/recorded.gif" alt="recorded" border="0">
+<img src="https://www.mediafire.com/view/f0r6f6lyjr7nqmf/recorded.gif/file" alt="recorded" border="0">
 
 ## Prerequisites
 + [AWS Account](https://aws.amazon.com/mobile/details/)
